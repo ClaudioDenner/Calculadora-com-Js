@@ -1,0 +1,290 @@
+
+
+<!DOCTYPE html>
+<html lang="pt_BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <style>
+        .calc{background-color: #fff; width: 95%;height: 500px; display:flex; justify-content:flex-start; align-items:center }
+        .calcA{display: flex;flex-direction: column; background-color: rgb(178, 181, 187); width: 80%; height:70%; flex-wrap: wrap; align-items:center;justify-content:space-around;padding-bottom: 1%;border-radius:5px;padding: 2px;}
+        .display{width: 95%; height: 90%; background-color: bisque; border-radius: 5px; align-items: center;justify-content: center; display:flex;justify-content: space-between;}
+        
+        
+        .numeros{width: 95%; height: 80%; display: flex; flex-direction: column; flex-wrap: wrap; justify-content:space-between; align-items: center;}
+        .bt{width: 22%; height: 19%; background-color: rgb(255, 255, 255); text-align: center;border-radius: 5px;font-size: 20pt;display: flex; align-items: center; justify-content: center;color:rgb(59, 59, 59);} 
+        .bt:hover{background-color: rgb(149, 198, 238);}
+        .visor{width:98%; height: 15%;display: flex; align-items: center; justify-content: center; text-align: right;font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; color:rgb(156, 100, 32); font-size: 16pt;}
+        .bt:nth-of-type(19){background-color: rgb(86, 188, 228); height: 38%;}
+        .bt:nth-of-type(19):hover{background-color: rgb(81, 63, 236);}
+        
+        
+
+        
+
+
+    </style>
+</head>
+<body>
+
+    <div class="calc">
+        <div class="calcA">
+            <div class="visor">
+                <div class="display" id="display">
+                    <div id="demonstrativo" class="demonstrativo" style="padding: 15px; font-size: 20pt;"></div>
+                    <div style="padding: 15px">
+                        <span id="op-aux"></span>
+                        <span id="valor1">0</span>
+                        <span id="operador"></span>
+                        <span id="valor2"></span>
+                        <span id="igualdade"> = </span>
+                        <span id="resultado" style="color:black"></span>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="numeros">
+                <div class="bt" id="reset">CE</div>
+                <div class="bt" id="7">7</div>
+                <div class="bt" id="4">4</div>
+                <div class="bt" id="1">1</div>
+                <div class="bt" id="0">0</div>
+                <div class="bt">&#128564;</div>
+                <div class="bt" id="8">8</div>
+                <div class="bt" id="5">5</div>
+                <div class="bt" id="2">2</div>
+                <div class="bt" id=".">.</div>
+                <div class="bt">&#128540;</div>
+                <div class="bt" id="9">9</div>
+                <div class="bt" id="6">6</div>
+                <div class="bt" id="3">3</div>
+                <div class="bt" id="=">=</div>
+                <div class="bt" id="÷">÷</div>
+                <div class="bt" id="x">x</div>
+                <div class="bt" id="-">-</div>
+                <div class="bt"id='+'>+</div>
+                
+            </div>
+            
+                
+        </div>
+    </div>
+    
+
+
+
+    <footer>By:Claudio Denner</footer>
+    <script>
+        var valor1 = document.getElementById('valor1');
+        var operadorT = document.getElementById('operador');
+        var operadorAux = document.getElementById('operador-aux');
+        var valor2 = document.getElementById('valor2');
+        var igualdade = document.getElementById('igualdade');
+        var result = document.getElementById('resultado');
+
+        //operadores
+        var mais = document.getElementById('+');
+        var menos = document.getElementById('-');
+        var multiplicacao = document.getElementById('x');
+        var divisao = document.getElementById('÷');
+        var igual = document.getElementById('=');
+        var reset = document.getElementById('reset');
+        var demonstrativo = document.getElementById('demonstrativo');
+       
+
+
+        //numeros
+        var zero = document.getElementById('0');
+        var um = document.getElementById('1');
+        var dois = document.getElementById('2');
+        var tres = document.getElementById('3');
+        var quatro = document.getElementById('4');
+        var cinco = document.getElementById('5');
+        var seis = document.getElementById('6');
+        var sete = document.getElementById('7');
+        var oito = document.getElementById('8');
+        var nove = document.getElementById('9');
+        var ponto = document.getElementById('.');
+        
+
+
+
+        var escrita = "";
+        var operador = "";
+        var escrita2 ="";
+        var resultado = '';
+        
+        
+        
+        
+        valor1.innerText = '0';
+
+        
+
+        
+
+        
+        function Display(){
+
+            this.caracter = 0;
+            
+        };
+
+        Display.prototype = {
+            add: function(valor){
+               
+
+                    save = valor.innerText;
+
+                    
+                    //valor.addEventListener('click',this.conteudo);
+                    this.conteudo();
+                
+               
+                
+
+
+            },
+            conteudo: function(valor){
+                
+
+                
+                if(operador!="" && escrita!=""){
+
+                    escrita2 = escrita2+save;
+                
+                valor2.innerText = escrita2;
+                operadorT.innerText = operador;
+
+
+
+                } 
+                else{
+
+                    if(escrita==""){if(operador=="-"){escrita=operador+save; valor1.innerText = escrita; operador="";} else {escrita=save; valor1.innerText = escrita; operador="";} } 
+                    
+                    else{escrita = escrita+save;
+                
+                    valor1.innerText = escrita;}
+
+                    
+
+                    
+                } 
+                
+                
+                
+            },
+            op: function(op){
+
+                op.addEventListener('click'|| 'keydown', function(){
+
+                var num1 = Number.parseFloat(escrita);
+                var num2 = Number.parseFloat(escrita2);
+                if(operador=="+"){resultado = num1+num2;} else if(operador=="-"){resultado = num1-num2;}
+                else if(operador=='x'){resultado = num1*num2} else if(operador=='÷'){resultado =num1/num2}
+
+                if(escrita!="" && escrita2!=""){igualdade.innerText="="; result.innerText=resultado;} else {igualdade.innerText=""}
+                
+
+
+
+                })
+
+                
+
+                var num1 = Number.parseFloat(escrita);
+                var num2 = Number.parseFloat(escrita2);
+                if(operador=="+"){resultado = num1+num2;} else if(operador=="-"){resultado = num1-num2;}
+                else if(operador=='x'){resultado = num1*num2} else if(operador=='÷'){resultado =num1/num2}
+
+                if(escrita!="" && escrita2!=""){igualdade.innerText="="; result.innerText=resultado;} else {igualdade.innerText=""}
+
+
+
+
+                
+
+                
+                
+
+            },
+            operadores: function(oper){
+                
+               
+                opper = oper.innerText;
+                //oper.addEventListener('click', function(){operador = opper;})
+                
+                operador = opper;
+                operador.innerText = opper;
+                demonstrativo.innerText = opper;
+                
+
+            }
+            
+        };
+
+
+        var start = new Display();
+
+        //event click
+        
+        zero.addEventListener('click', function(){start.add(zero);} )
+        um.addEventListener('click', function(){start.add(um);} )
+        dois.addEventListener('click', function(){start.add(dois);} )
+        tres.addEventListener('click', function(){start.add(tres);} )
+        quatro.addEventListener('click', function(){start.add(quatro);} )
+        cinco.addEventListener('click', function(){start.add(cinco);} )
+        seis.addEventListener('click', function(){start.add(seis);} )
+        sete.addEventListener('click', function(){start.add(sete);} )
+        oito.addEventListener('click', function(){start.add(oito);} )
+        nove.addEventListener('click', function(){start.add(nove);} )
+        ponto.addEventListener('click', function(){start.add(ponto);} )
+
+
+        //event keydown
+
+        //document.addEventListener('keydown', function(tecla){ alert(tecla.keyCode)});
+        
+        document.addEventListener('keydown', function(tecla){ if(tecla.keyCode==110 ||tecla.keyCode==188 ){start.add(ponto);}});
+        document.addEventListener('keydown', function(tecla){ if(tecla.keyCode==48 ||tecla.keyCode==96 ){start.add(zero);}});
+        document.addEventListener('keydown', function(tecla){ if(tecla.keyCode==49 ||tecla.keyCode==97 ){start.add(um);}});
+        document.addEventListener('keydown', function(tecla){ if(tecla.keyCode==50 ||tecla.keyCode==98 ){start.add(dois);}});
+        document.addEventListener('keydown', function(tecla){ if(tecla.keyCode==51 ||tecla.keyCode==99 ){start.add(tres);}});
+        document.addEventListener('keydown', function(tecla){ if(tecla.keyCode==52 ||tecla.keyCode==100 ){start.add(quatro);}});
+        document.addEventListener('keydown', function(tecla){ if(tecla.keyCode==53 ||tecla.keyCode==101 ){start.add(cinco);}});
+        document.addEventListener('keydown', function(tecla){ if(tecla.keyCode==54 ||tecla.keyCode==102 ){start.add(seis);}});
+        document.addEventListener('keydown', function(tecla){ if(tecla.keyCode==55 ||tecla.keyCode==103 ){start.add(sete);}});
+        document.addEventListener('keydown', function(tecla){ if(tecla.keyCode==56 ||tecla.keyCode==104 ){start.add(oito);}});
+        document.addEventListener('keydown', function(tecla){ if(tecla.keyCode==57 ||tecla.keyCode==105 ){start.add(nove);}});
+        document.addEventListener('keydown', function(tecla){ if(tecla.keyCode==189 ||tecla.keyCode==109 ){start.operadores(menos);}});
+        document.addEventListener('keydown', function(tecla){ if(tecla.keyCode==187 ||tecla.keyCode==107 ){start.operadores(mais);}});
+        document.addEventListener('keydown', function(tecla){ if(tecla.keyCode==111 ||tecla.keyCode==193 ){start.operadores(divisao);}});
+        document.addEventListener('keydown', function(tecla){ if(tecla.keyCode==106){start.operadores(multiplicacao);}});
+        document.addEventListener('keydown', function(tecla){ if(tecla.keyCode==13){start.op(igual);}});
+        document.addEventListener('keydown', function(tecla){ if(tecla.keyCode==8){escrita = 0; operador=""; escrita2 = ""; valor1.innerText = ""; valor2.innerText=""; operadorT.innerText="";resultado="";result.innerText="";demonstrativo.innerText ="";}});
+        
+
+        
+        mais.addEventListener('click', function(){start.operadores(mais);});
+        menos.addEventListener('click', function(){start.operadores(menos);});
+        divisao.addEventListener('click', function(){start.operadores(divisao);});
+        multiplicacao.addEventListener('click', function(){start.operadores(multiplicacao);});
+
+
+        reset.addEventListener('click', function(){escrita = 0; operador=""; escrita2 = ""; valor1.innerText = ""; valor2.innerText=""; operadorT.innerText="";resultado="";result.innerText="";demonstrativo.innerText ="";})
+        start.op(igual);
+        
+        
+
+    
+
+
+
+
+    </script>
+</body>
+</html>
